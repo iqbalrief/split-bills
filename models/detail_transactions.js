@@ -3,19 +3,29 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class detail_transactions extends Model {
+  class Detail_Transactions extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Detail_Transactions.hasMany(models.Transactions, {
+        foreignKey: 'transactions_id',
+      });
     }
   }
-  detail_transactions.init({
-    id: DataTypes.INTEGER,
-    transactions_id: DataTypes.INTEGER,
+  Detail_Transactions.init({
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    transactions_id:  {
+      type: DataTypes.INTEGER,
+      primaryKey:true,
+    },
     items: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
     amount: DataTypes.INTEGER
@@ -23,5 +33,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Detail_Transactions',
   });
-  return detail_transactions;
+  return Detail_Transactions;
 };
